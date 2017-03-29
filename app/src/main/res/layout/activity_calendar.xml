@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/calendar_year_month_view_height"
+        android:background="#44f">
+
+        <TextView
+            android:id="@+id/txtToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_bg_item"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="5dp"
+            android:text="@string/today"
+            android:textColor="#44f"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:text="2017/3"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_bg_item"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="5dp"
+            android:text="@string/menu"
+            android:textColor="#44f"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#7f4444ff" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/layoutWeekTitle"
+            layout="@layout/layout_week_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/calendar_week_view_height" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutWeekTitle" />
+
+        <FrameLayout
+            android:id="@+id/layoutFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></FrameLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="calendar_year_month_view_height">50dp</dimen>
+    <dimen name="calendar_week_view_height">30dp</dimen>
+    <dimen name="calendar_contents_height">200dp</dimen>
+</resources>

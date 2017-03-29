@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/calendar_week_view_height"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="일"
+        android:textColor="#f00" />
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="월" />
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="화" />
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="수" />
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="목" />
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="금" />
+
+    <TextView
+        style="@style/CalendarWeekTitle"
+        android:text="토"
+        android:textColor="#00f" />
+</LinearLayout>
