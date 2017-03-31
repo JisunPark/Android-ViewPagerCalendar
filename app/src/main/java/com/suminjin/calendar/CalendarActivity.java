@@ -3,10 +3,7 @@ package com.suminjin.calendar;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -82,88 +79,41 @@ public class CalendarActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 viewPager.setCurrentItem(CalendarPagerAdapter.START_POSITION);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(viewPager, "rotationY", 0, 180);
+                animator.setDuration(300);
+                animator.start();
             }
         });
 
+        final View menuFragment = findViewById(R.id.menuFragment);
+//        menuFragment.setVisibility(View.GONE);
+        final int menuFragmentHeight = getResources().getDimensionPixelSize(R.dimen.menu_fragment_height);
+        final View layoutCalendar = findViewById(R.id.layoutCalendar);
         final View layoutTitle = findViewById(R.id.layoutTitle);
+
         // 메뉴 버튼
         findViewById(R.id.txtMenu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (view.isSelected()) {
-                    removeFragment();
+//                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
+//                    animator.setDuration(300);
+//                    animator.start();
 
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
-                    animator.setDuration(300);
-                    animator.start();
+                    ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", 0);
+                    mover.setDuration(300);
+                    mover.start();
                 } else {
-                    setFragment();
+//                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
+//                    animator.setDuration(300);
+//                    animator.start();
 
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
-                    animator.setDuration(300);
-                    animator.start();
+                    ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", menuFragmentHeight);
+                    mover.setDuration(300);
+                    mover.start();
                 }
-
                 view.setSelected(!view.isSelected());
-            }
-        });
-    }
-
-    private void setFragment() {
-        String className = TestFragment.class.getName();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = fm.findFragmentByTag(className);
-        String tag = className;
-        if (fragment == null) {
-            fragment = Fragment.instantiate(this, className, null);
-        } else {
-            tag += "Extra";
-            fragment = Fragment.instantiate(this, className, null);
-        }
-
-        if (fragment == null) {
-            try {
-                throw new Exception("Check " + className + " is exist Fragment");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        int enter = R.anim.slide_in_down;
-        int exit = R.anim.slide_out_up;
-        if (enter != 0 && exit != 0) {
-            ft.setCustomAnimations(enter, exit, enter, exit);
-        }
-
-        ft.add(R.id.layoutFragment, fragment, tag);
-
-        ft.commit();
-    }
-
-    private void removeFragment() {
-        final String className = TestFragment.class.getName();
-        FragmentManager fm = getSupportFragmentManager();
-        final FragmentTransaction ft = fm.beginTransaction();
-        final Fragment fragment = fm.findFragmentByTag(className);
-//        ft.remove(fragment);
-//        ft.commit();
-
-        AnimationUtils.move(fragment.getView(), 0, 0, 0, -1, getResources().getInteger(R.integer.anim_duration), new AccelerateInterpolator(), new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                ft.remove(fragment);
-                ft.commit();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
+                layoutTitle.setBackgroundResource(view.isSelected() ? R.color.top_bg_sel : R.color.top_bg_nor);
             }
         });
     }
