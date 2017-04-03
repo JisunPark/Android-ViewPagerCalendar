@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/menu_fragment_height"
-        android:background="@color/top_bg_sel"
+        android:background="@color/menu_bg"
         android:padding="10dp">
 
         <TextView
@@ -40,12 +40,12 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="7dp"
+        android:layout_height="5dp"
         android:background="@drawable/bg_up_to_down_shadow" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="7dp"
+        android:layout_height="5dp"
         android:layout_gravity="bottom"
         android:background="@drawable/bg_down_to_up_shadow" />
 </FrameLayout>

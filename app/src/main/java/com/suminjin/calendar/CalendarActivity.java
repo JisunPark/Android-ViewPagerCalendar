@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.telephony.TelephonyManager;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -78,42 +76,38 @@ public class CalendarActivity extends FragmentActivity {
         findViewById(R.id.txtToday).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(CalendarPagerAdapter.START_POSITION);
-                ObjectAnimator animator = ObjectAnimator.ofFloat(viewPager, "rotationY", 0, 180);
-                animator.setDuration(300);
-                animator.start();
+                viewPager.setCurrentItem(CalendarPagerAdapter.START_POSITION, true);
             }
         });
 
-        final View menuFragment = findViewById(R.id.menuFragment);
-//        menuFragment.setVisibility(View.GONE);
         final int menuFragmentHeight = getResources().getDimensionPixelSize(R.dimen.menu_fragment_height);
         final View layoutCalendar = findViewById(R.id.layoutCalendar);
         final View layoutTitle = findViewById(R.id.layoutTitle);
 
         // 메뉴 버튼
+        final int menuAnimDuration = getResources().getInteger(R.integer.menu_anim_duration);
         findViewById(R.id.txtMenu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (view.isSelected()) {
-//                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
-//                    animator.setDuration(300);
-//                    animator.start();
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
+                    animator.setDuration(menuAnimDuration);
+                    animator.start();
 
                     ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", 0);
-                    mover.setDuration(300);
+                    mover.setDuration(menuAnimDuration);
                     mover.start();
                 } else {
-//                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
-//                    animator.setDuration(300);
-//                    animator.start();
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
+                    animator.setDuration(menuAnimDuration);
+                    animator.start();
 
                     ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", menuFragmentHeight);
-                    mover.setDuration(300);
+                    mover.setDuration(menuAnimDuration);
                     mover.start();
                 }
                 view.setSelected(!view.isSelected());
-                layoutTitle.setBackgroundResource(view.isSelected() ? R.color.top_bg_sel : R.color.top_bg_nor);
+                layoutTitle.setBackgroundResource(view.isSelected() ? R.color.menu_bg : R.color.title_bg);
             }
         });
     }
