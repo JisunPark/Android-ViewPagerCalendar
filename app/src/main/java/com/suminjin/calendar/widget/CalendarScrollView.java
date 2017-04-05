@@ -1,20 +1,20 @@
-package com.suminjin.calendar;
+package com.suminjin.calendar.widget;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.FrameLayout;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.suminjin.calendar.R;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,8 @@ public class CalendarScrollView extends ScrollView {
     private ArrayList<View> contentsViewList;
     private View prevDayCell;
     private View prevContentsView;
+
+    private int x = -1, y = -1;
 
     public CalendarScrollView(Context context) {
         this(context, null);
@@ -98,38 +100,65 @@ public class CalendarScrollView extends ScrollView {
                     txtDay.setText("");
                 }
                 layoutDayCell.setTag(new CellData(i, j, year, month, day));
-                layoutDayCell.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final CellData tag = (CellData) v.getTag();
-                        View contentsView = contentsViewList.get(tag.rowIndex);
+                if (!txtDay.getText().toString().isEmpty()) {
+                    layoutDayCell.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final CellData tag = (CellData) v.getTag();
+                            View contentsView = contentsViewList.get(tag.rowIndex);
 
-                        v.setSelected(!v.isSelected());
+                            v.setSelected(!v.isSelected());
 
-                        if (prevContentsView == null) {
-                            showContentsView(contentsView, tag.rowIndex);
-                            prevDayCell = v;
-                            prevContentsView = contentsView;
-                        } else {
-                            hideContentsView(prevContentsView);
-                            if (prevDayCell == v) {
-                                hideContentsView(contentsView);
-                                prevContentsView = null;
-                            } else {
-                                prevDayCell.setSelected(false);
+                            if (prevContentsView == null) {
+                                showContentsView(contentsView, tag);
                                 prevDayCell = v;
-                                showContentsView(contentsView, tag.rowIndex);
                                 prevContentsView = contentsView;
+                            } else {
+                                hideContentsView(prevContentsView);
+                                if (prevDayCell == v) {
+                                    hideContentsView(contentsView);
+                                    prevContentsView = null;
+                                } else {
+                                    prevDayCell.setSelected(false);
+                                    prevDayCell = v;
+                                    showContentsView(contentsView, tag);
+                                    prevContentsView = contentsView;
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
                 layoutWeek.addView(layoutDayCell);
             }
             layoutCalendar.addView(layoutWeek);
 
             // 선택된 날짜에 대한 contents 영역
             View viewContents = inflater.inflate(R.layout.layout_calendar_day_contents, null);
+            // 메뉴 팝업 띄우기
+            viewContents.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            x = (int) event.getRawX();
+                            y = (int) event.getRawY();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            ContentsMenuDialog dialog = new ContentsMenuDialog(context);
+                            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                            if (x >= 0 && y >= 0) {
+                                params.gravity = Gravity.TOP | Gravity.LEFT;
+                                params.x = x;
+                                params.y = y;
+                            }
+                            dialog.show();
+                            break;
+                        default:
+                    }
+
+                    return true;
+                }
+            });
             LinearLayout.LayoutParams paramsContents = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.calendar_contents_height));
             viewContents.setLayoutParams(paramsContents);
             viewContents.setBackgroundResource(R.drawable.bg_day_contents);
@@ -143,13 +172,15 @@ public class CalendarScrollView extends ScrollView {
         v.setVisibility(View.GONE);
     }
 
-    private void showContentsView(final View v, final int rowIndex) {
+    private void showContentsView(final View v, final CellData tag) {
         v.setVisibility(View.VISIBLE);
+        TextView txtContents = (TextView) v.findViewById(R.id.txtContents);
+        txtContents.setText((tag.month + 1) + "." + tag.day);
 
         post(new Runnable() {
             @Override
             public void run() {
-                if (rowIndex >= 2) {
+                if (tag.rowIndex > 2) {
                     fullScroll(FOCUS_DOWN);
                 } else {
                     fullScroll(FOCUS_UP);

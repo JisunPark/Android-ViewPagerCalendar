@@ -1,9 +1,11 @@
-package com.suminjin.calendar;
+package com.suminjin.calendar.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AlphaAnimation;
@@ -97,4 +99,29 @@ public class AnimationUtils {
         anim.start();
     }
 
+    /**
+     * Display Util
+     * @author LDS
+     */
+
+    public static class DisplayUtils {
+
+        public static int getDisplayWidth(Context context){
+            DisplayMetrics display = context.getResources().getDisplayMetrics();
+            return display.widthPixels;
+        }
+
+        public static int getDisplayHeight(Context context){
+            DisplayMetrics display = context.getResources().getDisplayMetrics();
+            return display.heightPixels;
+        }
+
+        public static int dpToPx(Context context, int dp){
+            return (int) (dp * context.getResources().getDisplayMetrics().density);
+        }
+
+        public static int pxToDp(Context context, int px){
+            return (int) (px / context.getResources().getDisplayMetrics().density);
+        }
+    }
 }

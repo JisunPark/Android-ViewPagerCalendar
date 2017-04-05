@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.TextView;
+
+import com.suminjin.calendar.utils.CalendarUtils;
+import com.suminjin.calendar.widget.MonthPickerDialog;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -17,6 +19,7 @@ import java.util.Locale;
  */
 
 public class CalendarActivity extends FragmentActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +33,7 @@ public class CalendarActivity extends FragmentActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         // 년월 표시
-        txtYear.setText(year + "/" + (month + 1));
+        txtYear.setText(getTitleString(year, month));
         txtYear.setTag(new int[]{year, month});
         txtYear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,7 @@ public class CalendarActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 int[] temp = CalendarUtils.getNewYearMonth(year, month, position);
-                txtYear.setText(temp[0] + "/" + (temp[1] + 1));
+                txtYear.setText(getTitleString(temp[0], temp[1]));
                 txtYear.setTag(temp);
             }
 
@@ -110,5 +113,9 @@ public class CalendarActivity extends FragmentActivity {
                 layoutTitle.setBackgroundResource(view.isSelected() ? R.color.menu_bg : R.color.title_bg);
             }
         });
+    }
+
+    private String getTitleString(int year, int month) {
+        return year + "/" + (month + 1);
     }
 }

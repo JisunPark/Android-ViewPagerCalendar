@@ -1,4 +1,6 @@
-package com.suminjin.calendar;
+package com.suminjin.calendar.utils;
+
+import com.suminjin.calendar.CalendarPagerAdapter;
 
 import java.util.Calendar;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package com.suminjin.calendar;
+package com.suminjin.calendar.widget;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.NumberPicker;
+
+import com.suminjin.calendar.R;
 
 /**
  * Created by parkjisun on 2017. 3. 28..

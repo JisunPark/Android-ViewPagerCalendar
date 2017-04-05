@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="3">
+
+    <TextView
+        style="@style/PopupMenuButton"
+        android:layout_columnSpan="3"
+        android:layout_gravity="center_horizontal"
+        android:text="a" />
+
+    <TextView
+        style="@style/PopupMenuButton"
+        android:text="b" />
+
+    <TextView
+        android:id="@+id/btnClose"
+        style="@style/PopupMenuButton"
+        android:background="@drawable/bg_btn_popup_close"
+        android:text="x" />
+
+    <TextView
+        style="@style/PopupMenuButton"
+        android:text="c" />
+
+
+    <TextView
+        style="@style/PopupMenuButton"
+        android:layout_columnSpan="3"
+        android:layout_gravity="center_horizontal"
+        android:text="d" />
+</GridLayout>

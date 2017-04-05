@@ -1,18 +1,17 @@
 package com.suminjin.calendar;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.*;
+
+import com.suminjin.calendar.utils.CalendarUtils;
+import com.suminjin.calendar.widget.CalendarScrollView;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.suminjin.calendar.R.id.scrollViewCalendar;
 
 /**
  * Created by parkjisun on 2017. 3. 28..
