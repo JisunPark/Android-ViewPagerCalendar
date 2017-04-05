@@ -1,5 +1,6 @@
 package com.suminjin.calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,10 +25,17 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.btnSetting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+            }
+        });
     }
 
     @Override
     public Animation onCreateAnimation(int transit, final boolean enter, int nextAnim) {
         return super.onCreateAnimation(transit, enter, nextAnim);
     }
+
 }

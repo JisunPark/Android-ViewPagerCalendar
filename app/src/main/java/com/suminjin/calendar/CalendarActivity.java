@@ -3,6 +3,7 @@ package com.suminjin.calendar;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -83,36 +84,45 @@ public class CalendarActivity extends FragmentActivity {
             }
         });
 
-        final int menuFragmentHeight = getResources().getDimensionPixelSize(R.dimen.menu_fragment_height);
+        // 메뉴 버튼
         final View layoutCalendar = findViewById(R.id.layoutCalendar);
         final View layoutTitle = findViewById(R.id.layoutTitle);
-
-        // 메뉴 버튼
-        final int menuAnimDuration = getResources().getInteger(R.integer.menu_anim_duration);
         findViewById(R.id.txtMenu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (view.isSelected()) {
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
-                    animator.setDuration(menuAnimDuration);
-                    animator.start();
-
-                    ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", 0);
-                    mover.setDuration(menuAnimDuration);
-                    mover.start();
+                    hideMenu(layoutTitle, layoutCalendar);
                 } else {
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
-                    animator.setDuration(menuAnimDuration);
-                    animator.start();
-
-                    ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", menuFragmentHeight);
-                    mover.setDuration(menuAnimDuration);
-                    mover.start();
+                    showMenu(layoutTitle, layoutCalendar);
                 }
                 view.setSelected(!view.isSelected());
                 layoutTitle.setBackgroundResource(view.isSelected() ? R.color.menu_bg : R.color.title_bg);
             }
         });
+    }
+
+    private void showMenu(View layoutTitle, View layoutCalendar) {
+        int menuAnimDuration = getResources().getInteger(R.integer.menu_anim_duration);
+        int menuFragmentHeight = getResources().getDimensionPixelSize(R.dimen.menu_fragment_height);
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
+        animator.setDuration(menuAnimDuration);
+        animator.start();
+
+        ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", menuFragmentHeight);
+        mover.setDuration(menuAnimDuration);
+        mover.start();
+    }
+
+    private void hideMenu(View layoutTitle, View layoutCalendar) {
+        int menuAnimDuration = getResources().getInteger(R.integer.menu_anim_duration);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
+        animator.setDuration(menuAnimDuration);
+        animator.start();
+
+        ObjectAnimator mover = ObjectAnimator.ofFloat(layoutCalendar, "translationY", 0);
+        mover.setDuration(menuAnimDuration);
+        mover.start();
     }
 
     private String getTitleString(int year, int month) {
