@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 
@@ -18,7 +20,8 @@ import android.widget.ImageView;
  */
 
 public class SettingActivity extends FragmentActivity {
-    private ImageView animated;
+    //    private ImageView animated;
+    private FrameLayout animated;
     private View childView;
 
     @Override
@@ -27,7 +30,7 @@ public class SettingActivity extends FragmentActivity {
         setContentView(R.layout.activity_setting);
 
         GridLayout layoutGrid = (GridLayout) findViewById(R.id.layoutGrid);
-        animated = (ImageView) findViewById(R.id.imageAnimated);
+        animated = (FrameLayout) findViewById(R.id.layoutAnimated);
         animated.setVisibility(View.GONE);
         animated.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +45,7 @@ public class SettingActivity extends FragmentActivity {
             if (i == 0 || i == 3) {
                 setImage(imageView, getResources().getDrawable(R.drawable.sample1));
             } else {
-                setImage(imageView, getResources().getDrawable(R.drawable.sample2));
+                setImage(imageView, getResources().getDrawable(R.drawable.sample5));
             }
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -53,13 +56,15 @@ public class SettingActivity extends FragmentActivity {
             });
             layoutGrid.addView(imageView);
         }
+
     }
 
     private void show(View view, final Animator.AnimatorListener listener) {
         animated.setVisibility(View.VISIBLE);
 
         ImageView imageView = (ImageView) view;
-        animated.setImageDrawable(imageView.getDrawable());
+        ((ImageView) animated.findViewById(R.id.imageView)).setImageDrawable(imageView.getDrawable());
+//        animated.setBackgroundDrawable(imageView.getDrawable());
         animated.setX(view.getX());
         animated.setY(view.getY());
         animated.setScaleX(0.5f);
@@ -145,7 +150,7 @@ public class SettingActivity extends FragmentActivity {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         p.width = displayMetrics.widthPixels / 2;
-        p.height = displayMetrics.heightPixels / 2;
+        p.height = (displayMetrics.heightPixels - AppConfig.statusBarHeight) / 2;
         imageView.setLayoutParams(p);
     }
 }

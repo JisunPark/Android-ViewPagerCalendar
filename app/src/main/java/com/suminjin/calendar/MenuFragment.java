@@ -31,6 +31,12 @@ public class MenuFragment extends Fragment {
                 startActivity(new Intent(getActivity(), SettingActivity.class));
             }
         });
+        view.findViewById(R.id.btnTest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), TestActivity.class));
+            }
+        });
     }
 
     @Override

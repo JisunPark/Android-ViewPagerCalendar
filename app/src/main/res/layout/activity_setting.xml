@@ -8,10 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageView
+<!--    <ImageView
         android:id="@+id/imageAnimated"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/sample1" />
+        android:src="@drawable/sample1" />-->
+
+    <include
+        android:id="@+id/layoutAnimated"
+        layout="@layout/layout_setting_item" />
 </FrameLayout>

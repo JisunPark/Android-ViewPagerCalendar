@@ -1,12 +1,16 @@
 package com.suminjin.calendar;
 
 import android.animation.ObjectAnimator;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.suminjin.calendar.utils.CalendarUtils;
@@ -25,6 +29,24 @@ public class CalendarActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        final ViewGroup decorView = (ViewGroup) this.getWindow().getDecorView();
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            decorView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        } else {
+                            // Nice one, Google
+                            decorView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        }
+                        Rect rect = new Rect();
+                        decorView.getWindowVisibleDisplayFrame(rect);
+                        AppConfig.statusBarHeight = rect.top; // This is the height of the status bar
+                        android.util.Log.e("jisunLog", "statusBarHeight : " + AppConfig.statusBarHeight);
+                    }
+                });
 
         Calendar cal = Calendar.getInstance(Locale.KOREA);
         final int year = cal.get(Calendar.YEAR);
@@ -105,7 +127,7 @@ public class CalendarActivity extends FragmentActivity {
         int menuAnimDuration = getResources().getInteger(R.integer.menu_anim_duration);
         int menuFragmentHeight = getResources().getDimensionPixelSize(R.dimen.menu_fragment_height);
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 180);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 0, 360);
         animator.setDuration(menuAnimDuration);
         animator.start();
 
@@ -116,7 +138,7 @@ public class CalendarActivity extends FragmentActivity {
 
     private void hideMenu(View layoutTitle, View layoutCalendar) {
         int menuAnimDuration = getResources().getInteger(R.integer.menu_anim_duration);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 180, 360);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(layoutTitle, "rotationX", 360, 0);
         animator.setDuration(menuAnimDuration);
         animator.start();
 
