@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -19,15 +18,18 @@ import android.widget.ImageView;
  * Created by parkjisun on 2017. 4. 5..
  */
 
-public class SettingActivity extends FragmentActivity {
+public class AnimTestActivity extends FragmentActivity {
     //    private ImageView animated;
     private FrameLayout animated;
     private View childView;
+    private int statusBarHeight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_anim_test);
+
+        statusBarHeight = getStatusBarHeight();
 
         GridLayout layoutGrid = (GridLayout) findViewById(R.id.layoutGrid);
         animated = (FrameLayout) findViewById(R.id.layoutAnimated);
@@ -150,7 +152,16 @@ public class SettingActivity extends FragmentActivity {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         p.width = displayMetrics.widthPixels / 2;
-        p.height = (displayMetrics.heightPixels - AppConfig.statusBarHeight) / 2;
+        p.height = (displayMetrics.heightPixels - statusBarHeight) / 2;
         imageView.setLayoutParams(p);
+    }
+
+    private int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

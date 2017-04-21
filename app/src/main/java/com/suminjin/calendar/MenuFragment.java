@@ -28,13 +28,13 @@ public class MenuFragment extends Fragment {
         view.findViewById(R.id.btnSetting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivity(new Intent(getActivity(), AnimTestActivity.class));
             }
         });
         view.findViewById(R.id.btnTest).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), TestActivity.class));
+                startActivity(new Intent(getActivity(), GridTestActivity.class));
             }
         });
     }

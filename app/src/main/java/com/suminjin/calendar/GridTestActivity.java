@@ -20,12 +20,12 @@ import java.util.ArrayList;
  * Created by parkjisun on 2017. 4. 6..
  */
 
-public class TestActivity extends FragmentActivity {
+public class GridTestActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_grid_test);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);

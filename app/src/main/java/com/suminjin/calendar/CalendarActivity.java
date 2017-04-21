@@ -30,23 +30,22 @@ public class CalendarActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        final ViewGroup decorView = (ViewGroup) this.getWindow().getDecorView();
-        decorView.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            decorView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        } else {
-                            // Nice one, Google
-                            decorView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                        }
-                        Rect rect = new Rect();
-                        decorView.getWindowVisibleDisplayFrame(rect);
-                        AppConfig.statusBarHeight = rect.top; // This is the height of the status bar
-                        android.util.Log.e("jisunLog", "statusBarHeight : " + AppConfig.statusBarHeight);
-                    }
-                });
+//        final ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
+//        decorView.getViewTreeObserver().addOnGlobalLayoutListener(
+//                new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        if (Build.VERSION.SDK_INT >= 16) {
+//                            decorView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                        } else {
+//                            // Nice one, Google
+//                            decorView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                        }
+//                        Rect rect = new Rect();
+//                        decorView.getWindowVisibleDisplayFrame(rect);
+//                        AppConfig.statusBarHeight = rect.top; // This is the height of the status bar
+//                    }
+//                });
 
         Calendar cal = Calendar.getInstance(Locale.KOREA);
         final int year = cal.get(Calendar.YEAR);

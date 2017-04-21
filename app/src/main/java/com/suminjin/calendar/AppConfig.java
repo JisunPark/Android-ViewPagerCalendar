@@ -5,5 +5,4 @@ package com.suminjin.calendar;
  */
 
 public class AppConfig {
-    public static int statusBarHeight = 0;
 }
